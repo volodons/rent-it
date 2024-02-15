@@ -18,10 +18,10 @@ import { HomeComponent } from './home/home.component';
             aria-hidden="true"
           />
         </header>
-        <section class="content">
-          <router-outlet></router-outlet>
-        </section>
       </a>
+      <section class="content">
+        <router-outlet></router-outlet>
+      </section>
     </main>
   `,
   styleUrls: ['./app.component.css'],
