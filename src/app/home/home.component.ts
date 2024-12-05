@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 
@@ -9,7 +10,7 @@ import { HousingService } from '../housing.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
+  imports: [CommonModule, HttpClientModule, HousingLocationComponent],
   template: `
     <section>
       <form>
@@ -40,7 +41,7 @@ export class HomeComponent {
   constructor() {
     this.housingService
       .getAllHousingLocations()
-      .then((housingLocationList: HousingLocation[]) => {
+      .subscribe((housingLocationList: HousingLocation[]) => {
         this.housingLocationList = housingLocationList;
         this.filteredLocationList = housingLocationList;
       });

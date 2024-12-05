@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { HousingLocation } from './housinglocation';
 
@@ -8,16 +11,16 @@ import { HousingLocation } from './housinglocation';
 export class HousingService {
   url = 'https://my-json-server.typicode.com/volodons/rent-it/locations';
 
-  async getAllHousingLocations(): Promise<HousingLocation[]> {
-    const data = await fetch(this.url);
-    return (await data.json()) ?? [];
+  constructor(private http: HttpClient) {}
+
+  getAllHousingLocations(): Observable<HousingLocation[]> {
+    return this.http.get<HousingLocation[]>(this.url);
   }
 
-  async getHousingLocationById(
-    id: number
-  ): Promise<HousingLocation | undefined> {
-    const data = await fetch(`${this.url}/${id}`);
-    return (await data.json()) ?? {};
+  getHousingLocationById(id: number): Observable<HousingLocation | undefined> {
+    return this.http
+      .get<HousingLocation>(`${this.url}/${id}`)
+      .pipe(map((location) => location ?? undefined));
   }
 
   submitApplication(firstName: string, lastName: string, email: string) {
